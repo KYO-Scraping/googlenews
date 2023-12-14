@@ -23,7 +23,6 @@ for s in range(len(sections)):
         '''
         print(len(sA))
         print(sA[0].find('a', 'JtKRv').get('href'))
-        print('\n')
     '''
     sectionA.append(sections[s].findAll(attrs={'class': 'XBspb'}))
     sectionB.append(sections[s].findAll(attrs={'class': 'IBr9hb'}))
