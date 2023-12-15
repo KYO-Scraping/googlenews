@@ -1,5 +1,8 @@
+import os
 import requests
 from bs4 import BeautifulSoup
+import json
+import pandas as pd
 
 html_doc = requests.get('https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvSUwyMHZNRFZxYUdjU0JXVnVMVWRDR2dKSlJDZ0FQAQ', params={'hl':'en-ID', 'gl':'ID', 'ceid':'ID:en'})
 soup = BeautifulSoup(html_doc.text, 'html.parser')
@@ -67,4 +70,19 @@ for s in range(len(sections)):
             }
             news_list.append(news_dict)
 
-print(news_list)
+# Create JSON File
+try:
+    os.mkdir('json_result')
+except FileExistsError:
+    pass
+
+with open('json_result/job_list.json', 'w+') as json_data:
+    json.dump(news_list, json_data)
+
+print('JSON Created')
+
+# Create CSV and XLSX File
+df = pd.DataFrame(news_list)
+df.to_csv('googlenews_data.csv', index=False)
+df.to_excel('googlenews_data.xlsx', index=False)
+print('CSV and XLSX Created')
